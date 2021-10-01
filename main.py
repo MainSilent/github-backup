@@ -1,13 +1,13 @@
 import os
 import re
 import sys
+import time
 import json
 import errno
+import requests
 import subprocess
 import urllib.parse
-
-import requests
-
+from datetime import datetime
 
 def get_json(url, token):
     while True:
@@ -21,12 +21,10 @@ def get_json(url, token):
             break
         url = response.links["next"]["url"]
 
-
 def check_name(name):
     if not re.match(r"^\w[-\.\w]*$", name):
         raise RuntimeError("invalid name '{0}'".format(name))
     return name
-
 
 def mkdir(path):
     try:
@@ -36,7 +34,6 @@ def mkdir(path):
             raise
         return False
     return True
-
 
 def mirror(repo_name, repo_url, to_path, username, token):
     parsed = urllib.parse.urlparse(repo_url)
@@ -64,7 +61,6 @@ def mirror(repo_name, repo_url, to_path, username, token):
         cwd=repo_path,
     )
 
-
 def backup(config_path):
     with open(config_path, "rb") as f:
         config = json.loads(f.read())
@@ -89,8 +85,13 @@ def backup(config_path):
             mkdir(owner_path)
             mirror(name, clone_url, owner_path, user["login"], token)
 
-
 if __name__ == "__main__":
     configs = []
-    for config in configs:
-        backup(config)
+    while True:
+        for config in configs:
+            try:
+                backup(config)
+            except Exception as e:
+                with open('./error.log' , 'a+') as f:
+                    f.write(datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + " : " + str(e))
+        time.sleep(1800)
