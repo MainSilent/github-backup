@@ -94,4 +94,4 @@ if __name__ == "__main__":
             except Exception as e:
                 with open('./error.log' , 'a+') as f:
                     f.write(datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + ": " + str(e))
-        time.sleep(1800)
+        time.sleep(900)
