@@ -21,4 +21,5 @@ systemctl create github_backup.service
 systemctl start github_backup.service
 echo "Service Created"
 
+systemctl daemon-reload
 systemctl status github_backup.service
