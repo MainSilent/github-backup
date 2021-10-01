@@ -9,6 +9,7 @@ Wants=network.target
 After=network.target
 
 [Service]
+WorkingDirectory=$(dirname "${ScriptPath}")
 ExecStart=python3 $ScriptPath
 
 [Install]
