@@ -3,7 +3,6 @@ import re
 import sys
 import json
 import errno
-import argparse
 import subprocess
 import urllib.parse
 
@@ -50,12 +49,8 @@ def mirror(repo_name, repo_url, to_path, username, token):
     repo_path = os.path.join(to_path, repo_name)
     mkdir(repo_path)
 
-    # git-init manual:
-    # "Running git init in an existing repository is safe."
     subprocess.call(["git", "init", "--bare", "--quiet"], cwd=repo_path)
 
-    # https://github.com/blog/1270-easier-builds-and-deployments-using-git-over-https-and-oauth:
-    # "To avoid writing tokens to disk, don't clone."
     subprocess.call(
         [
             "git",
@@ -70,12 +65,8 @@ def mirror(repo_name, repo_url, to_path, username, token):
     )
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Backup GitHub repositories")
-    parser.add_argument("config", metavar="CONFIG", help="a configuration file")
-    args = parser.parse_args()
-
-    with open(args.config, "rb") as f:
+def backup(config_path):
+    with open(config_path, "rb") as f:
         config = json.loads(f.read())
 
     owners = config.get("owners")
@@ -100,4 +91,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    configs = []
+    for config in configs:
+        backup(config)
