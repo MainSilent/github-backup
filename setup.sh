@@ -18,7 +18,7 @@ EOF
 echo "Service file Created"
 
 systemctl daemon-reload
-systemctl create github_backup.service
+systemctl enable github_backup.service
 systemctl start github_backup.service
 echo "Service Created"
 
