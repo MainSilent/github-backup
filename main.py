@@ -93,5 +93,5 @@ if __name__ == "__main__":
                 backup(config)
             except Exception as e:
                 with open('./error.log' , 'a+') as f:
-                    f.write(datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + ": " + str(e))
+                    f.write(datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + ": " + str(e) + '\n')
         time.sleep(900)
