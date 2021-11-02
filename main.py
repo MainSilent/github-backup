@@ -78,6 +78,8 @@ def backup(config_path):
             owner = check_name(repo["owner"]["login"])
             clone_url = repo["clone_url"]
 
+            print(f"Checking {name}")
+
             if owners and owner not in owners:
                 continue
 
@@ -91,6 +93,7 @@ if __name__ == "__main__":
         for config in configs:
             try:
                 backup(config)
+                print("\nWaiting for next timeout...\n")
             except Exception as e:
                 with open('./error.log' , 'a+') as f:
                     f.write(datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + ": " + str(e) + '\n')
